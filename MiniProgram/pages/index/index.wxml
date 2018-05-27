@@ -1,0 +1,27 @@
+<!--index.wxml-->
+<!-- <view wx:if="{{src}}">
+  <view class="fix-height">
+    <image src="{{src}}"></image>
+  </view>
+  <view class="button-sp-area">
+    <button class="weui-btn" type="primary" plain="true" bindtap="saveRecord">保存</button>
+  </view>
+</view> -->
+<view>
+  <view class="fix-height">
+    <image mode="widthFix" src="/images/default.jpg"></image>
+  </view>
+  <view class="button-sp-area">
+    <!-- <button class="weui-btn" type="primary" plain="true" bindtap="takePhoto">拍摄</button> -->
+    <!-- <view bindtap="selectPhoto" class="center underline">从相册选择 ></view> -->
+  </view>
+</view>
+<view class="weui-cells weui-cells__title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <textarea class="weui-textarea" placeholder="请输入文字记录" maxlength="1000" auto-height="true" bindinput="wordsChanged" />
+      <view class="weui-textarea-counter">{{leftWords}}/1000</view>
+    </view>
+  </view>
+</view>
+ <button class="btn-fastphoto" type="primary" plain="true">+</button> 
