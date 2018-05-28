@@ -9,7 +9,7 @@
 </view> -->
 <view>
   <view class="fix-height">
-    <image mode="widthFix" src="/images/default.jpg"></image>
+    <image mode="widthFix" src="/images/default1.jpg"></image>
   </view>
   <view class="button-sp-area">
     <!-- <button class="weui-btn" type="primary" plain="true" bindtap="takePhoto">拍摄</button> -->
