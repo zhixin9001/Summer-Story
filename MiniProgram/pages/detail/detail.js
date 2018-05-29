@@ -16,6 +16,8 @@ Page({
       { src: "https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2380677316.jpg" },
       { src: "https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2380677316.jpg" },
     ],
+    photoCount: 0,
+    photoLimit: 9,
     content: '',
     remain: {
       num: 540,
@@ -24,6 +26,37 @@ Page({
     location: '位置',
     x: 0,
     y: 0
+  },
+  addPhoto: function () {
+    let that = this;
+    wx.showActionSheet({
+      itemList: ['拍照', '从相册选择'],
+      success: function (res) {
+        if (!res.cancel) {
+          if (res.tapIndex === 0) {
+            that.chooseWxImage("camera");
+          } else if (res.tapIndex === 1) {
+            that.chooseWxImage("album");
+          }
+        }
+      }
+    });
+  },
+  chooseWxImage(sourceType) {
+    let that = this;
+    wx.chooseImage({
+      count: that.data.photoLimit - that.data.photoCount,
+      sizeType: ['original', 'compressed'],
+      sourceType: [sourceType],
+      success: function (res) {
+        let addedPhotos = that.data.photos;
+        addedPhotos.unshift(res.tempFilePaths);
+        that.setData({
+          photos: addedPhotos,
+          photoCount=addedPhotos.length
+        });
+      }
+    });
   },
   changeTips: function (e) {
     let value = e.detail.value;
@@ -43,7 +76,7 @@ Page({
     let _location = this.data.location;
     let _x = this.data.x;
     let _y = this.data.y;
-    let _this=this;
+    let _this = this;
     wx.chooseLocation({
       success: function (res) {
         _location = res.name;
