@@ -5,17 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    photos: [
-      { src: "https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2380677316.jpg" },
-      { src: "https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2386736909.jpg" },
-      { src: "https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2382076389.jpg" },
-      { src: "https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2388681695.jpg" },
-      { src: "https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2387538436.jpg" },
-      { src: "https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2380677316.jpg" },
-      { src: "https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2380677316.jpg" },
-      { src: "https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2380677316.jpg" },
-      { src: "https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2380677316.jpg" },
-    ],
+    photos: [],
     photoCount: 0,
     photoLimit: 9,
     content: '',
@@ -46,14 +36,17 @@ Page({
     let that = this;
     wx.chooseImage({
       count: that.data.photoLimit - that.data.photoCount,
-      sizeType: ['original', 'compressed'],
+      sizeType: ['original'],
       sourceType: [sourceType],
       success: function (res) {
+        debugger
         let addedPhotos = that.data.photos;
-        addedPhotos.unshift(res.tempFilePaths);
+        res.tempFilePaths.forEach(a => {
+          addedPhotos.unshift(a);
+        });
         that.setData({
           photos: addedPhotos,
-          photoCount=addedPhotos.length
+          photoCount: addedPhotos.length
         });
       }
     });
@@ -91,11 +84,32 @@ Page({
       }
     })
   },
+  bindTouchStart: function (e) {
+    this.startTime = e.timeStamp;
+  },
+  bindTouchEnd: function (e) {
+    this.endTime = e.timeStamp;
+  },
   previewImage: function (e) {
-    var current = e.target.dataset.src;
+    if (this.endTime - this.startTime >= 350) {
+      return;
+    }
+    var current = e.target.dataset;
     wx.previewImage({
       current: current,
       urls: this.data.photos,
+    })
+  },
+  deleteImage: function (e) {
+    wx.showActionSheet({
+      itemList: ['删除选中'],
+      success: function (res) {
+        if (!res.cancel) {
+          if (res.tapIndex === 0) {
+
+          }
+        }
+      }
     })
   }
 })

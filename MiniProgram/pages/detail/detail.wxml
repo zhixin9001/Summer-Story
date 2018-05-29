@@ -3,7 +3,7 @@
   <!-- 图片 -->
   <scroll-view scroll-x="true" scroll-y="true" class="photos-wrap">
     <block wx:for="{{ photos }}" wx:key="item">
-      <image mode="aspectFill" src="{{item.src}}" data-src="{{item.src}}" bindtap="previewImage"></image>
+      <image mode="aspectFill" src="{{item}}" data-src="{{item}}" bindtap="previewImage" bindlongtap="deleteImage" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd"></image>
     </block>
   </scroll-view>
   <view>
