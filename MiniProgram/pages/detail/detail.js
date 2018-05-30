@@ -90,6 +90,7 @@ Page({
   bindTouchEnd: function (e) {
     this.endTime = e.timeStamp;
   },
+  //点击预览
   previewImage: function (e) {
     if (this.endTime - this.startTime >= 350) {
       return;
@@ -100,16 +101,26 @@ Page({
       urls: this.data.photos,
     })
   },
+  //长按删除
   deleteImage: function (e) {
+    let _e = e;
+    let that = this;
     wx.showActionSheet({
       itemList: ['删除选中'],
       success: function (res) {
         if (!res.cancel) {
           if (res.tapIndex === 0) {
-
+            let index = that.data.photos.findIndex(a => a == _e.target.dataset);
+            that.data.photos.splice(index);
+            that.setData({
+              photos: that.data.photos
+            });
           }
         }
       }
     })
+  },
+  submitData: function (e) {
+
   }
 })
