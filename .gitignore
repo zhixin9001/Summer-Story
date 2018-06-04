@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/API/SummerStoryService/.vs
+/API/SummerStoryService/packages
+/API/SummerStoryService/SummerStoryService/bin
+/API/SummerStoryService/SummerStoryService/obj/Debug
+/API/SummerStoryService/SummerStoryService.Tests/obj/Debug
+/API/SummerStoryService/SummerStoryService/obj/Release
+/API/SummerStoryService/SummerStoryService/Properties/PublishProfiles
+/API/SummerStoryService/SummerStoryService.Tests/obj/Release
