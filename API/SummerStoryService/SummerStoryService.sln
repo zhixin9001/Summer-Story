@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SummerStoryService", "Summe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SummerStoryService.Tests", "SummerStoryService.Tests\SummerStoryService.Tests.csproj", "{056EE019-4D3E-4909-BD6F-1CF57284FEAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{04DE6C35-D18C-4A91-A6FA-D67877E57AE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{056EE019-4D3E-4909-BD6F-1CF57284FEAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{056EE019-4D3E-4909-BD6F-1CF57284FEAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{056EE019-4D3E-4909-BD6F-1CF57284FEAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04DE6C35-D18C-4A91-A6FA-D67877E57AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04DE6C35-D18C-4A91-A6FA-D67877E57AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04DE6C35-D18C-4A91-A6FA-D67877E57AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04DE6C35-D18C-4A91-A6FA-D67877E57AE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
