@@ -18,7 +18,8 @@ namespace SummerStoryService.Controllers
         // GET: api/Test/5
         public string Get(int id)
         {
-            return "value"+id;
+            return SaveImgInCloud.Save();
+            //return "value" + id;
         }
 
         // POST: api/Test
