@@ -8,6 +8,7 @@ public class SaveImgInCloud
 {
     public static string Save()
     {
+
         Mac mac = new Mac(ConfigHelper.config.AccessKey, ConfigHelper.config.SecretKey);
         // 上传文件名
         string key = "key" + DateTime.Now.ToString();
