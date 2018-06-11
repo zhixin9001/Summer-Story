@@ -16,3 +16,6 @@
 /API/SummerStoryService/Common/obj/Release
 /API/SummerStoryService/SummerStoryService/Config/Config.json
 /API/SummerStoryService/SummerStoryService.Tests/bin/Debug
+/API/SummerStoryService/DTO/obj
+/API/SummerStoryService/IService/obj
+/API/SummerStoryService/Service/obj

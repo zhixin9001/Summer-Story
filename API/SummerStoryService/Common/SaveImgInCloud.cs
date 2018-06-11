@@ -3,6 +3,7 @@ using Qiniu.Http;
 using Qiniu.Storage;
 using Qiniu.Util;
 using System;
+using System.Web;
 
 public class SaveImgInCloud
 {
@@ -13,7 +14,7 @@ public class SaveImgInCloud
         // 上传文件名
         string key = "key" + DateTime.Now.ToString();
         // 本地文件路径
-        string filePath = "D:\\Untitled.png";
+        string filePath =  HttpContext.Current.Server.MapPath("~/Config/Capture.JPG");
         // 存储空间名
         string Bucket = "summerystory";
         // 设置上传策略，详见：https://developer.qiniu.com/kodo/manual/1206/put-policy

@@ -1,28 +1,34 @@
 ﻿--User
 CREATE TABLE Summer_User(
-	ID
-	WxID
-	CreatedDatetime
+	ID BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	WxID NVARCHAR(255),
+	CreatedDatetime Date NOT NULL,
+    IsDeleted bit
 )
 
 --Record
 CREATE TABLE Summer_Record(
-	ID
-	UserID
-	CreatedDatetime
+	ID BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	UserID  BIGINT NOT NULL,
+	CreatedDatetime Date NOT NULL,
+    IsDeleted BIT,
+	FOREIGN KEY (UserID) REFERENCES Summer_User(ID)
 )
 
 --Text
 CREATE TABLE Summer_Text(
-	ID
-	RecordID
-	Content
+	ID BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	RecordID  BIGINT NOT NULL,
+	Content NVARCHAR(1024),
+	IsDeleted BIT,
+	FOREIGN KEY (RecordID) REFERENCES Summer_Record(ID)
 )
 
 --Image
 CREATE TABLE Summer_Image(
-	ID
-	RecordID
-	ImageName
-	Cloud
+	ID BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	RecordID  BIGINT NOT NULL,
+	ImageName NVARCHAR(255) NOT NULL,
+	IsDeleted BIT,
+	FOREIGN KEY (RecordID) REFERENCES Summer_Record(ID)
 )
