@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -19,7 +20,9 @@ namespace SummerStoryService.Controllers
         // GET: api/Test/5
         public string Get(int id)
         {
-            return SaveImgInCloud.Save();
+            //var a = new UserService();
+            return "a";
+            //return SaveImgInCloud.Save();
             //return "value" + id;
         }
 

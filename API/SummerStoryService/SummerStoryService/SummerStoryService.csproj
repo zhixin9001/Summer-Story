@@ -116,6 +116,18 @@
       <Project>{04de6c35-d18c-4a91-a6fa-d67877e57ae2}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{388a1bd3-d65f-4e97-a4b2-2aae418390c2}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IService\IService.csproj">
+      <Project>{e72861e9-6dc6-4bf1-84cc-d3e767831b5c}</Project>
+      <Name>IService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service\Service.csproj">
+      <Project>{bfe61913-29c1-452c-b735-cb9a86ee173e}</Project>
+      <Name>Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

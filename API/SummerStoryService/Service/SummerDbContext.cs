@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Reflection;
@@ -19,6 +20,7 @@ namespace Service
             modelBuilder.Configurations.AddFromAssembly(Assembly.GetExecutingAssembly());
         }
 
-        //public DbSet<>
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<RecordEntity> Records { get; set; }
     }
 }
