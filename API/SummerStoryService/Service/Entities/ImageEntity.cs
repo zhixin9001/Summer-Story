@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DTO
+namespace Service.Entities
 {
-    public class ImageDTO
+    public class ImageEntity : BaseEntity
     {
-        public long ID { get; set; }
         public long RecordID { get; set; }
-        public DateTime CreatedDateTime { get; set; }
         public string ImageName { get; set; }
-        public bool IsDeleted { get; set; }
+        public virtual RecordEntity Record { get; set; }
     }
 }

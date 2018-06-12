@@ -19,3 +19,6 @@
 /API/SummerStoryService/DTO/obj
 /API/SummerStoryService/IService/obj
 /API/SummerStoryService/Service/obj
+/API/SummerStoryService/DTO/bin/Debug/netstandard2.0
+/API/SummerStoryService/IService/bin/Debug/netstandard2.0
+/API/SummerStoryService/Service/bin/Debug/netstandard2.0
