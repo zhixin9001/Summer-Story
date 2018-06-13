@@ -9,6 +9,10 @@ namespace Service.Repositories
     public class RecordRepository : IRepository<RecordEntity>
     {
         public SummerDbContext Ctx { get; }
+        public RecordRepository()
+        {
+            Ctx = new SummerDbContext();
+        }
 
         public long Add(RecordEntity entity)
         {

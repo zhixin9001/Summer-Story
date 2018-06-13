@@ -9,6 +9,10 @@ namespace Service.Repositories
     public class UserRepository : IRepository<UserEntity>
     {
         public SummerDbContext Ctx { get; }
+        public UserRepository()
+        {
+            Ctx = new SummerDbContext();
+        }
 
         public long Add(UserEntity entity)
         {

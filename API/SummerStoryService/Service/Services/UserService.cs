@@ -11,9 +11,10 @@ namespace Service.Services
     public class UserService : IUserService
     {
         IRepository<UserEntity> rep;
-        public UserService(IRepository<UserEntity> rep)
+        public UserService(/*IRepository<UserEntity> rep*/)
         {
-            this.rep = rep;
+            //this.rep = rep;
+            this.rep = new UserRepository();
         }
         public void Add(UserDTO dto)
         {
