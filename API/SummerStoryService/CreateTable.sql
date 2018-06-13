@@ -21,6 +21,7 @@ CREATE TABLE Summer_Text(
 	RecordID  BIGINT NOT NULL,
 	Content NVARCHAR(1024),
 	IsDeleted BIT,
+	CreatedDatetime Date NOT NULL,
 	FOREIGN KEY (RecordID) REFERENCES Summer_Record(ID)
 )
 
@@ -30,5 +31,6 @@ CREATE TABLE Summer_Image(
 	RecordID  BIGINT NOT NULL,
 	ImageName NVARCHAR(255) NOT NULL,
 	IsDeleted BIT,
+	CreatedDatetime Date NOT NULL,
 	FOREIGN KEY (RecordID) REFERENCES Summer_Record(ID)
 )

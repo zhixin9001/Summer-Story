@@ -7,5 +7,6 @@ namespace Service.Entities
     public class UserEntity : BaseEntity
     {
         public string WxID { get; set; }
+        public virtual ICollection<RecordEntity> Records { get; set; }
     }
 }
