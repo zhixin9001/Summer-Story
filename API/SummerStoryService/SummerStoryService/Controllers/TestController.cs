@@ -1,4 +1,5 @@
 ﻿using DTO;
+using IService;
 using Service.Services;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,11 @@ namespace SummerStoryService.Controllers
 {
     public class TestController : ApiController
     {
+        IUserService service;
+        public TestController(IUserService se)
+        {
+            this.service = se;
+        }
         // GET: api/Test
         public IEnumerable<string> Get()
         {
@@ -21,9 +27,7 @@ namespace SummerStoryService.Controllers
         // GET: api/Test/5
         public string Get(int id)
         {
-            
-            var a = new UserService();
-            a.Add(new UserDTO { });
+            service.Add(new UserDTO { });
             return "a";
             //return SaveImgInCloud.Save();
             //return "value" + id;
