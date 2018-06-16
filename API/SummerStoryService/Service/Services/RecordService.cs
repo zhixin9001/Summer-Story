@@ -4,6 +4,7 @@ using Service.Entities;
 using Service.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Service.Services
@@ -24,9 +25,31 @@ namespace Service.Services
             rep.Add(entity);
         }
 
-        public RecordDTO[] GetPagedData(int startIndex, int pageSize)
+        public RecordDTO[] GetPagedData(long userID, int startIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            var entities = rep.GetAll()
+                .Where(a => a.UserID == userID)
+                .OrderByDescending(a => a.CreatedDateTime)
+                .Skip(startIndex)
+                .Take(pageSize)
+                .ToList();
+            return entities
+        }
+
+        private RecordDTO ToDTO(RecordEntity entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentException("RecordEntity cannot be null");
+            }
+
+            var dto = new RecordDTO
+            {
+                ID = entity.ID,
+                CreatedDateTime = entity.CreatedDateTime,
+            };
+            if(entity.Images)
+            return dto;
         }
     }
 }

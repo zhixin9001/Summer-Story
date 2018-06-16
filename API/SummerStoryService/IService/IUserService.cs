@@ -8,5 +8,7 @@ namespace IService
     public interface IUserService : IServiceFlag
     {
         void Add(UserDTO dto);
+
+        UserDTO GetByWxID(string WxID);
     }
 }

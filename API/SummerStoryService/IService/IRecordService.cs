@@ -6,6 +6,6 @@ namespace IService
     public interface IRecordService : IServiceFlag
     {
         void Add(RecordDTO dto);
-        RecordDTO[] GetPagedData(int startIndex, int pageSize);
+        RecordDTO[] GetPagedData(long userID, int startIndex, int pageSize);
     }
 }

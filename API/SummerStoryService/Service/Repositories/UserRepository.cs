@@ -28,7 +28,7 @@ namespace Service.Repositories
 
         public IQueryable<UserEntity> GetAll()
         {
-            throw new NotImplementedException();
+            return Ctx.Users.Where(u => u.IsDeleted == false);
         }
 
         public UserEntity GetById(long id)
