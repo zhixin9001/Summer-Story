@@ -57,10 +57,14 @@
     <Compile Include="ModelConfigs\TextConfig.cs" />
     <Compile Include="ModelConfigs\UserConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ImageRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\RecordRepository.cs" />
+    <Compile Include="Repositories\TextRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\RecordService.cs" />
+    <Compile Include="Services\TextService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="SummerDbContext.cs" />
   </ItemGroup>

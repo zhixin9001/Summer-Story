@@ -3,24 +3,23 @@ using IService;
 using Service.Entities;
 using Service.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Service.Services
 {
     public class RecordService : IRecordService
     {
         IRepository<RecordEntity> rep;
-        public RecordService(IRepository<RecordEntity> rep)
+        public RecordService(/*IRepository<RecordEntity> rep*/)
         {
+            var rep = new RecordRepository();
             this.rep = rep;
         }
         public void Add(RecordDTO dto)
         {
             var entity = new RecordEntity
             {
-
+                UserID=dto.UserID
             };
             rep.Add(entity);
         }
@@ -33,7 +32,7 @@ namespace Service.Services
                 .Skip(startIndex)
                 .Take(pageSize)
                 .ToList();
-            return entities
+            return entities.Select(a => ToDTO(a)).ToArray();
         }
 
         private RecordDTO ToDTO(RecordEntity entity)
@@ -48,7 +47,14 @@ namespace Service.Services
                 ID = entity.ID,
                 CreatedDateTime = entity.CreatedDateTime,
             };
-            if(entity.Images)
+            if (entity.Images != null)
+            {
+                dto.ImageIDs = entity.Images.Select(a => a.ID).ToArray();
+            }
+            if (entity.Texts != null)
+            {
+                dto.TextIDs = entity.Texts.Select(a => a.ID).ToArray();
+            }
             return dto;
         }
     }

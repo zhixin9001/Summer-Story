@@ -13,7 +13,7 @@ namespace SummerStoryService
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            AutofacConfig.Config();
+            //AutofacConfig.Config();
         }
     }
 }

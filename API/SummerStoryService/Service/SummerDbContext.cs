@@ -22,5 +22,7 @@ namespace Service
 
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<RecordEntity> Records { get; set; }
+        public DbSet<ImageEntity> Images { get; set; }
+        public DbSet<TextEntity> Texts { get; set; }
     }
 }
