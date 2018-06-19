@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigHelper.cs" />
+    <Compile Include="GenerateThumbnail.cs" />
     <Compile Include="LogHelper.cs" />
     <Compile Include="SaveImgInCloud.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using Common;
+using DTO;
 using IService;
 using Service.Repositories;
 using Service.Services;
@@ -34,21 +35,24 @@ namespace SummerStoryService.Controllers
         }
 
         // POST: api/Record
-        public void Post()
+        public void Post([FromBody]string content)
         {
-            var file = HttpContext.Current.Request.Files.Count > 0 ?
-        HttpContext.Current.Request.Files[0] : null;
-
-            if (file != null && file.ContentLength > 0)
+            var files = HttpContext.Current.Request.Files;
+            if (files == null || files.Count <= 0)
             {
-                //var fileName = Path.GetFileName(file.FileName);
+                throw new ArgumentException("There're no Images been uploaded");
+            }
 
-                //var path = Path.Combine(
-                //    HttpContext.Current.Server.MapPath("~/uploads"),
-                //    fileName
-                //);
+            for (var i = 0; i < files.Count; i++)
+            {
+                var file = files[i];
+                var thumbnail = GenerateThumbnail.Generate(file.InputStream);
+                var thumbnailUploadResult = SaveImgInCloud.Save(thumbnail);
+                var imageUploadResult = SaveImgInCloud.Save(file.InputStream);
+                if (thumbnailUploadResult == 200 && imageUploadResult == 200)
+                {
 
-                //file.SaveAs(path);
+                }
             }
         }
     }
