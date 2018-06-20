@@ -13,8 +13,9 @@ namespace Service.Services
     public class ImageService : IImageService
     {
         IRepository<ImageEntity> rep;
-        public ImageService(IRepository<ImageEntity> rep)
+        public ImageService(/*IRepository<ImageEntity> rep*/)
         {
+            var rep = new ImageRepository();
             this.rep = rep;
         }
         public void Add(ImageDTO dto)
@@ -28,9 +29,9 @@ namespace Service.Services
             rep.Add(entity);
         }
 
-        public ImageDTO GetByRecordID(long recordID)
+        public ImageDTO[] GetByRecordID(long recordID)
         {
-            var entity = rep.GetAll().Where(a => a.RecordID == recordID).FirstOrDefault();
+            var entities = rep.GetAll().Where(a => a.RecordID == recordID);
             return ToDTO(entity);
         }
 

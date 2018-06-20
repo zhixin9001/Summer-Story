@@ -13,8 +13,9 @@ namespace Service.Services
     public class TextService : ITextService
     {
         IRepository<TextEntity> rep;
-        public TextService(IRepository<TextEntity> rep)
+        public TextService(/*IRepository<TextEntity> rep*/)
         {
+            var rep = new TextRepository();
             this.rep = rep;
         }
         public void Add(TextDTO dto)

@@ -8,12 +8,10 @@ using System.Web;
 
 public class SaveImgInCloud
 {
-    public static int Save(Stream imageStream)
+    public static int Save(Stream imageStream, string imageName)
     {
 
         Mac mac = new Mac(ConfigHelper.config.AccessKey, ConfigHelper.config.SecretKey);
-        // 上传文件名
-        string key = "key" + DateTime.Now.ToString();
         // 本地文件路径
         //string filePath =  HttpContext.Current.Server.MapPath("~/Config/Capture.JPG");
         // 存储空间名
@@ -35,7 +33,7 @@ public class SaveImgInCloud
         // 表单上传
         FormUploader target = new FormUploader(config);
         //HttpResult result = target.UploadFile(filePath, key, token, null);
-        var result = target.UploadStream(imageStream,key,token,null);
+        var result = target.UploadStream(imageStream, imageName, token, null);
         return result.Code;
     }
 }

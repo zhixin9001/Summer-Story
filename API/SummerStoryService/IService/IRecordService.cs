@@ -5,7 +5,7 @@ namespace IService
 {
     public interface IRecordService : IServiceFlag
     {
-        void Add(RecordDTO dto);
+        long Add(RecordDTO dto);
         RecordDTO[] GetPagedData(long userID, int startIndex, int pageSize);
     }
 }

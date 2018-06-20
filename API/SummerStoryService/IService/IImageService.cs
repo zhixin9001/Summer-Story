@@ -9,7 +9,7 @@ namespace IService
 {
     public interface IImageService : IServiceFlag
     {
-        ImageDTO GetByRecordID(long recordID);
+        ImageDTO[] GetByRecordID(long recordID);
         void Add(ImageDTO dto);
     }
 }

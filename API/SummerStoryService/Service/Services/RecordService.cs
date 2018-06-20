@@ -15,13 +15,13 @@ namespace Service.Services
             var rep = new RecordRepository();
             this.rep = rep;
         }
-        public void Add(RecordDTO dto)
+        public long Add(RecordDTO dto)
         {
             var entity = new RecordEntity
             {
-                UserID=dto.UserID
+                UserID = dto.UserID
             };
-            rep.Add(entity);
+            return rep.Add(entity);
         }
 
         public RecordDTO[] GetPagedData(long userID, int startIndex, int pageSize)
