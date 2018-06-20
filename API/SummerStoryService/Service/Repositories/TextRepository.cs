@@ -28,7 +28,7 @@ namespace Service.Repositories
         public long Add(TextEntity entity)
         {
             Ctx.Texts.Add(entity);
-            Ctx.SaveChangesAsync();
+            Ctx.SaveChanges();
             return entity.ID;
         }
 

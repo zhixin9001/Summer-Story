@@ -7,7 +7,7 @@ namespace IService
 {
     public interface IUserService : IServiceFlag
     {
-        void Add(UserDTO dto);
+        long Add(UserDTO dto);
 
         UserDTO GetByWxID(string WxID);
     }

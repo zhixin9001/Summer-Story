@@ -17,7 +17,7 @@ namespace Service.Repositories
         public long Add(UserEntity entity)
         {
             Ctx.Users.Add(entity);
-            Ctx.SaveChangesAsync();
+            Ctx.SaveChanges();
             return entity.ID;
         }
 

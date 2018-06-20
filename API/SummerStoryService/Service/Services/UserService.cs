@@ -17,13 +17,13 @@ namespace Service.Services
             //this.rep = rep;
             this.rep = new UserRepository();
         }
-        public void Add(UserDTO dto)
+        public long Add(UserDTO dto)
         {
             var entity = new UserEntity
             {
                 WxID = dto.WxID
             };
-            rep.Add(entity);
+            return rep.Add(entity);
         }
 
         public UserDTO GetByWxID(string WxID)

@@ -28,7 +28,7 @@ namespace Service.Repositories
         public long Add(ImageEntity entity)
         {
             Ctx.Images.Add(entity);
-            Ctx.SaveChangesAsync();
+            Ctx.SaveChanges();
             return entity.ID;
         }
 

@@ -31,8 +31,8 @@ namespace Service.Services
 
         public ImageDTO[] GetByRecordID(long recordID)
         {
-            var entities = rep.GetAll().Where(a => a.RecordID == recordID);
-            return ToDTO(entity);
+            var entities = rep.GetAll().Where(a => a.RecordID == recordID).ToList();
+            return entities.Select(a => ToDTO(a)).ToArray();
         }
 
         private ImageDTO ToDTO(ImageEntity entity)

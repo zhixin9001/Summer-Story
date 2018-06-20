@@ -15,11 +15,13 @@ namespace SummerStoryService.Controllers
 {
     public class RecordController : ApiController
     {
+        IUserService userService;
         IRecordService recordService;
         ITextService textService;
         IImageService imageService;
         public RecordController(/*IUserService se*/)
         {
+            this.userService = new UserService();
             this.recordService = new RecordService();
             this.textService = new TextService();
             this.imageService = new ImageService();
@@ -48,34 +50,50 @@ namespace SummerStoryService.Controllers
         }
 
         // POST: api/Record
-        public void Post([FromBody]string content)
+        public void Post()
         {
             var files = HttpContext.Current.Request.Files;
             if (files == null || files.Count <= 0)
             {
                 throw new ArgumentException("There're no Images been uploaded");
             }
+            var user = userService.GetByWxID("zhixin9001");
+            long userID;
+            if (user == null)
+            {
+                var userDTO = new UserDTO
+                {
+                    WxID = "zhixin9001"
+                };
+                userID = userService.Add(userDTO);
+            }
+            else
+            {
+                userID = user.ID;
+            }
+
             var recordDTO = new RecordDTO
             {
-                UserID = 1,
+                UserID = userID,
             };
             var recordID = recordService.Add(recordDTO);
             var textDTO = new TextDTO
             {
                 RecordID = recordID,
-                Content = content
+                Content = "asdf"
             };
             textService.Add(textDTO);
 
             for (var i = 0; i < files.Count; i++)
             {
                 var file = files[i];
-                var imageName = Guid.NewGuid() + "-" + DateTime.Now.ToString();
-                var thumbnailName = imageName + "-thumbnail";
+                var imageName = Guid.NewGuid().ToString().Substring(0, 8) + "-" + DateTime.Now.ToString();
+                var thumbnailName = imageName + Consts.THUMBNAIL_FLAG;
 
                 var thumbnail = GenerateThumbnail.Generate(file.InputStream);
-                var thumbnailUploadResult = SaveImgInCloud.Save(thumbnail, thumbnailName);
-                var imageUploadResult = SaveImgInCloud.Save(file.InputStream, imageName);
+                var thumbnailUploadResult = SaveImgInCloud.Save(thumbnail, thumbnailName + Consts.IMAGE_SUFFIX);
+                file.InputStream.Position = 0;
+                var imageUploadResult = SaveImgInCloud.Save(file.InputStream, imageName + Consts.IMAGE_SUFFIX);
                 if (thumbnailUploadResult == 200 && imageUploadResult == 200)
                 {
 
