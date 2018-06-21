@@ -3,6 +3,7 @@ using DTO;
 using IService;
 using Service.Repositories;
 using Service.Services;
+using SummerStoryService.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,18 +28,32 @@ namespace SummerStoryService.Controllers
             this.imageService = new ImageService();
         }
         // GET: api/Record
-        public IEnumerable<string> Get(int startIndex)
+        public IEnumerable<RecordResponse> Get(int startIndex)
         {
-            var records = recordService.GetPagedData(1, startIndex, 10);
+            var records = recordService.GetPagedData(2, startIndex, 10);
+            var response = new List<RecordResponse>();
             if (records != null)
             {
                 for (var i = 0; i < records.Length; i++)
                 {
+                    var record = new RecordResponse();
+                    record.Images = new List<ImageModel>();
                     var text = textService.GetByRecordID(records[i].ID);
                     var images = imageService.GetByRecordID(records[i].ID);
+                    record.Content = text.Content;
+                    for (var j = 0; j < images.Length; j++)
+                    {
+                        var imageModel = new ImageModel
+                        {
+                            ImageURL = CloudImageManager.GetPrivateURL(images[i].ImageName),
+                            ThumbnailURL = CloudImageManager.GetPrivateURL(images[i].ThumbNailName),
+                        };
+                        record.Images.Add(imageModel);
+                    }
+                    response.Add(record);
                 }
             }
-            return new string[] { "value1", "value2" };
+            return response;
         }
 
         // GET: api/Record/5
@@ -91,9 +106,9 @@ namespace SummerStoryService.Controllers
                 var thumbnailName = imageName + Consts.THUMBNAIL_FLAG;
 
                 var thumbnail = GenerateThumbnail.Generate(file.InputStream);
-                var thumbnailUploadResult = SaveImgInCloud.Save(thumbnail, thumbnailName + Consts.IMAGE_SUFFIX);
+                var thumbnailUploadResult = CloudImageManager.Save(thumbnail, thumbnailName + Consts.IMAGE_SUFFIX);
                 file.InputStream.Position = 0;
-                var imageUploadResult = SaveImgInCloud.Save(file.InputStream, imageName + Consts.IMAGE_SUFFIX);
+                var imageUploadResult = CloudImageManager.Save(file.InputStream, imageName + Consts.IMAGE_SUFFIX);
                 if (thumbnailUploadResult == 200 && imageUploadResult == 200)
                 {
 

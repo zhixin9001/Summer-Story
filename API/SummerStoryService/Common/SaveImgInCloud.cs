@@ -6,14 +6,11 @@ using System;
 using System.IO;
 using System.Web;
 
-public class SaveImgInCloud
+public class CloudImageManager
 {
     public static int Save(Stream imageStream, string imageName)
     {
-
         Mac mac = new Mac(ConfigHelper.config.AccessKey, ConfigHelper.config.SecretKey);
-        // 本地文件路径
-        //string filePath =  HttpContext.Current.Server.MapPath("~/Config/Capture.JPG");
         // 存储空间名
         string Bucket = "summerystory";
         // 设置上传策略，详见：https://developer.qiniu.com/kodo/manual/1206/put-policy
@@ -35,5 +32,11 @@ public class SaveImgInCloud
         //HttpResult result = target.UploadFile(filePath, key, token, null);
         var result = target.UploadStream(imageStream, imageName, token, null);
         return result.Code;
+    }
+
+    public static string GetPrivateURL(string imageKey)
+    {
+        Mac mac = new Mac(ConfigHelper.config.AccessKey, ConfigHelper.config.SecretKey);
+        return DownloadManager.CreatePrivateUrl(mac, ConfigHelper.config.CloudDomain, imageKey, 3600);
     }
 }
