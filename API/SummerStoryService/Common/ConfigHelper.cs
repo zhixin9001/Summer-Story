@@ -28,5 +28,8 @@ namespace Common
         public string AccessKey;
         public string SecretKey;
         public string CloudDomain;
+        public string AppID;
+        public string App_Secret;
+        public string WxTokenURL;
     }
 }
