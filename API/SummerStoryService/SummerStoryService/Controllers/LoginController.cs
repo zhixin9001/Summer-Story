@@ -25,7 +25,12 @@ namespace SummerStoryService.Controllers
             {
                 return string.Empty;
             }
-         var a=   HttpMethods.Get<WxSessionResponse>("");
+            var wxSessionResponse = HttpMethods.Get<WxSessionResponse>(
+                string.Format(ConfigHelper.config.WxTokenURL
+                                        , ConfigHelper.config.WxAppID
+                                        , ConfigHelper.config.WxApp_Secret
+                                        , code)
+            );
             return "";
         }
     }

@@ -10,7 +10,7 @@ public class CloudImageManager
 {
     public static int Save(Stream imageStream, string imageName)
     {
-        Mac mac = new Mac(ConfigHelper.config.AccessKey, ConfigHelper.config.SecretKey);
+        Mac mac = new Mac(ConfigHelper.config.QiNiuAccessKey, ConfigHelper.config.QiNiuSecretKey);
         // 存储空间名
         string Bucket = "summerystory";
         // 设置上传策略，详见：https://developer.qiniu.com/kodo/manual/1206/put-policy
@@ -36,7 +36,7 @@ public class CloudImageManager
 
     public static string GetPrivateURL(string imageKey)
     {
-        Mac mac = new Mac(ConfigHelper.config.AccessKey, ConfigHelper.config.SecretKey);
-        return DownloadManager.CreatePrivateUrl(mac, ConfigHelper.config.CloudDomain, imageKey, 3600);
+        Mac mac = new Mac(ConfigHelper.config.QiNiuAccessKey, ConfigHelper.config.QiNiuSecretKey);
+        return DownloadManager.CreatePrivateUrl(mac, ConfigHelper.config.QiNiuCloudDomain, imageKey, 3600);
     }
 }

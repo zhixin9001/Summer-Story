@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Common
 {
-    class ConfigHelper
+    public class ConfigHelper
     {
         public static ConfigModel config = ConfigHelper.InitConfig();
         public static ConfigModel InitConfig()
@@ -25,11 +25,12 @@ namespace Common
 
     public class ConfigModel
     {
-        public string AccessKey;
-        public string SecretKey;
-        public string CloudDomain;
-        public string AppID;
-        public string App_Secret;
+        public string QiNiuAccessKey;
+        public string QiNiuSecretKey;
+        public string QiNiuCloudDomain;
+        public string WxAppID;
+        public string WxApp_Secret;
         public string WxTokenURL;
+        public string JWTSecret;
     }
 }
