@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SummerStoryService.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -11,9 +12,8 @@ namespace SummerStoryService
         {
             // Web API configuration and services
 
-            // Web API routes
             config.MapHttpAttributeRoutes();
-
+            config.Filters.Add(new AuthFilterAttribute());
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

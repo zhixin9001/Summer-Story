@@ -1,6 +1,7 @@
 ﻿using Common;
 using IService;
 using Service.Services;
+using SummerStoryService.App_Start;
 using SummerStoryService.Models.Responses;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ namespace SummerStoryService.Controllers
         }
 
         //POST: api/Login
-        public string Post(string code)
+        [AllowAnonymous]
+        public string Get(string code)
         {
             if (string.IsNullOrEmpty(code))
             {
@@ -31,7 +33,14 @@ namespace SummerStoryService.Controllers
                                         , ConfigHelper.config.WxApp_Secret
                                         , code)
             );
-            return "";
+            if (string.IsNullOrEmpty(wxSessionResponse.openid))
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
+            else
+            {
+                return JWTManager.GenerateToken(wxSessionResponse.openid);
+            }
         }
     }
 }
