@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Common
 {
-    class LogHelper
+    public class LogHelper
     {
         public const string LOG_DIR = "Logs";
         public const string LOG_SUFFIX = "log";

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,7 +15,8 @@ namespace SummerStoryService.App_Start
 
         public Task ExecuteExceptionFilterAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            LogHelper.WriteLog(actionExecutedContext.Exception);
+            return null;
         }        
     }
 }

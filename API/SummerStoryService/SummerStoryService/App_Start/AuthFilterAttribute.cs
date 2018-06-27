@@ -30,8 +30,16 @@ namespace SummerStoryService.App_Start
             }
             else
             {
-                var openID = JWTManager.DecodeToken(token);
-                HttpContext.Current.Session[Consts.OPENID_KEY] = openID;
+                //var openID = JWTManager.DecodeToken(token);
+                //HttpContext.Current.Session[Consts.OPENID_KEY] = openID;
+                if (HttpContext.Current.Session != null && HttpContext.Current.Session[Consts.OPENID_KEY] != null)
+                {
+                    HttpContext.Current.Session[Consts.OPENID_KEY] = "openID";
+                }
+                else
+                {
+                    HttpContext.Current.Session.Add(Consts.OPENID_KEY, "asdf");
+                }
             }
             /*
             GET http://localhost:1156/api/record/1 HTTP/1.1

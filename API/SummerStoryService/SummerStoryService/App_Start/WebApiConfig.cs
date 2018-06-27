@@ -14,6 +14,7 @@ namespace SummerStoryService
 
             config.MapHttpAttributeRoutes();
             config.Filters.Add(new AuthFilterAttribute());
+            config.Filters.Add(new ExceptionFilter());
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
