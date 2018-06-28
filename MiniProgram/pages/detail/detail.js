@@ -1,4 +1,6 @@
-// pages/detail/detail.js
+const config = require('./config');
+var app = getApp()
+
 Page({
 
   /**
@@ -121,6 +123,16 @@ Page({
     })
   },
   submitData: function (e) {
-
+    var self = this;
+    wx.uploadFile({
+      url: config.addRecordUrl,
+      filePath: this.data.photos,
+      name: 'file',
+      header: { Authorization: app.globalData.openid },
+      success: function (res) {
+        var data = res.data
+        //do something
+      }
+    })
   }
 })
