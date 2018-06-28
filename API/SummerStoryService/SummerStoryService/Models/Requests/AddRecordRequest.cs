@@ -7,6 +7,6 @@ namespace SummerStoryService.Models.Requests
 {
     public class AddRecordRequest
     {
-
+        public string Content { get; set; }
     }
 }

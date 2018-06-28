@@ -3,6 +3,7 @@ using DTO;
 using IService;
 using Service.Repositories;
 using Service.Services;
+using SummerStoryService.Models.Requests;
 using SummerStoryService.Models.Responses;
 using System;
 using System.Collections.Generic;
@@ -16,112 +17,136 @@ namespace SummerStoryService.Controllers
 {
     public class RecordController : ApiController
     {
-        //IUserService userService;
-        //IRecordService recordService;
-        //ITextService textService;
-        //IImageService imageService;
-        //public RecordController(/*IUserService se*/)
-        //{
-        //    this.userService = new UserService();
-        //    this.recordService = new RecordService();
-        //    this.textService = new TextService();
-        //    this.imageService = new ImageService();
-        //}
-        //// GET: api/Record
-        //public IEnumerable<RecordResponse> Get(int startIndex)
-        //{
-        //    var records = recordService.GetPagedData(2, startIndex, 10);
-        //    var response = new List<RecordResponse>();
-        //    if (records != null)
-        //    {
-        //        for (var i = 0; i < records.Length; i++)
-        //        {
-        //            var record = new RecordResponse();
-        //            record.Images = new List<ImageModel>();
-        //            var text = textService.GetByRecordID(records[i].ID);
-        //            var images = imageService.GetByRecordID(records[i].ID);
-        //            record.Content = text.Content;
-        //            for (var j = 0; j < images.Length; j++)
-        //            {
-        //                var imageModel = new ImageModel
-        //                {
-        //                    ImageURL = CloudImageManager.GetPrivateURL(images[i].ImageName),
-        //                    ThumbnailURL = CloudImageManager.GetPrivateURL(images[i].ThumbNailName),
-        //                };
-        //                record.Images.Add(imageModel);
-        //            }
-        //            response.Add(record);
-        //        }
-        //    }
-        //    return response;
-        //}
-
-        // GET: api/Record/5
-        public string Get(string id)
+        IUserService userService;
+        IRecordService recordService;
+        ITextService textService;
+        IImageService imageService;
+        public RecordController(/*IUserService se*/)
         {
-            return HttpContext.Current.Session[Consts.OPENID_KEY].ToString();
-
-            //return SaveImgInCloud.Save();
-            //return "value" + id;
+            this.userService = new UserService();
+            this.recordService = new RecordService();
+            this.textService = new TextService();
+            this.imageService = new ImageService();
+        }
+        // GET: api/Record
+        public IEnumerable<RecordResponse> Get(int startIndex)
+        {
+            var userID = GetUserIDByToken();
+            if (userID <= 0)
+            {
+                return null;
+            }
+            var records = recordService.GetPagedData(userID, startIndex, Consts.PAGE_SIZE);
+            var response = new List<RecordResponse>();
+            if (records != null)
+            {
+                for (var i = 0; i < records.Length; i++)
+                {
+                    var record = new RecordResponse
+                    {
+                        Images = new List<ImageModel>()
+                    };
+                    var text = textService.GetByRecordID(records[i].ID);
+                    var images = imageService.GetByRecordID(records[i].ID);
+                    if (text != null)
+                    {
+                        record.Content = text.Content;
+                    }
+                    if (images != null)
+                    {
+                        for (var j = 0; j < images.Length; j++)
+                        {
+                            var imageModel = new ImageModel
+                            {
+                                ImageURL = CloudImageManager.GetPrivateURL(images[i].ImageName),
+                                ThumbnailURL = CloudImageManager.GetPrivateURL(images[i].ThumbNailName),
+                            };
+                            record.Images.Add(imageModel);
+                        }
+                    }
+                    response.Add(record);
+                }
+            }
+            return response;
         }
 
-        //// POST: api/Record
-        //public void Post()
-        //{
-        //    var files = HttpContext.Current.Request.Files;
-        //    if (files == null || files.Count <= 0)
-        //    {
-        //        throw new ArgumentException("There're no Images been uploaded");
-        //    }
-        //    var user = userService.GetByWxID("zhixin9001");
-        //    long userID;
-        //    if (user == null)
-        //    {
-        //        var userDTO = new UserDTO
-        //        {
-        //            WxID = "zhixin9001"
-        //        };
-        //        userID = userService.Add(userDTO);
-        //    }
-        //    else
-        //    {
-        //        userID = user.ID;
-        //    }
+        // POST: api/Record
+        public void Post(AddRecordRequest request)
+        {
+            var files = HttpContext.Current.Request.Files;
+            if (files == null || files.Count <= 0)
+            {
+                throw new ArgumentException("There're no Images been uploaded");
+            }
+            var userID = GetUserIDByToken(addNewUser: true);
 
-        //    var recordDTO = new RecordDTO
-        //    {
-        //        UserID = userID,
-        //    };
-        //    var recordID = recordService.Add(recordDTO);
-        //    var textDTO = new TextDTO
-        //    {
-        //        RecordID = recordID,
-        //        Content = "asdf"
-        //    };
-        //    textService.Add(textDTO);
+            var recordDTO = new RecordDTO
+            {
+                UserID = userID
+            };
+            var recordID = recordService.Add(recordDTO);
 
-        //    for (var i = 0; i < files.Count; i++)
-        //    {
-        //        var file = files[i];
-        //        var imageName = Guid.NewGuid().ToString().Substring(0, 8) + "-" + DateTime.Now.ToString();
-        //        var thumbnailName = imageName + Consts.THUMBNAIL_FLAG;
+            var textDTO = new TextDTO
+            {
+                RecordID = recordID,
+                Content = request.Content
+            };
+            textService.Add(textDTO);
 
-        //        var thumbnail = GenerateThumbnail.Generate(file.InputStream);
-        //        var thumbnailUploadResult = CloudImageManager.Save(thumbnail, thumbnailName + Consts.IMAGE_SUFFIX);
-        //        file.InputStream.Position = 0;
-        //        var imageUploadResult = CloudImageManager.Save(file.InputStream, imageName + Consts.IMAGE_SUFFIX);
-        //        if (thumbnailUploadResult == 200 && imageUploadResult == 200)
-        //        {
+            for (var i = 0; i < files.Count; i++)
+            {
+                var file = files[i];
+                var imageName = Guid.NewGuid().ToString().Substring(0, 8) + "-" + DateTime.Now.ToString();
+                var thumbnailName = imageName + Consts.THUMBNAIL_FLAG;
 
-        //        }
-        //        var imageDTO = new ImageDTO
-        //        {
-        //            RecordID = recordID,
-        //            ImageName = imageName,
-        //            ThumbNailName = thumbnailName
-        //        };
-        //        imageService.Add(imageDTO);
-        //    }
-        //}
+                var thumbnail = GenerateThumbnail.Generate(file.InputStream);
+                var thumbnailUploadResult = CloudImageManager.Save(thumbnail, thumbnailName + Consts.IMAGE_SUFFIX);
+                file.InputStream.Position = 0;
+                if (thumbnailUploadResult == 200)
+                {
+                    var imageUploadResult = CloudImageManager.Save(file.InputStream, imageName + Consts.IMAGE_SUFFIX);
+                    if (imageUploadResult == 200)
+                    {
+                        var imageDTO = new ImageDTO
+                        {
+                            RecordID = recordID,
+                            ImageName = imageName,
+                            ThumbNailName = thumbnailName
+                        };
+                        imageService.Add(imageDTO);
+                    }
+                    else
+                    {
+                        //rollback
+                    }
+                }
+            }
+        }
+
+        private long GetUserIDByToken(bool addNewUser = false)
+        {
+            var token = HttpContext.Current.Request.Headers["Authorization"];
+            var openID = JWTManager.DecodeToken(token);
+            var user = userService.GetByWxID(openID);
+            if (user == null)
+            {
+                return user.ID;
+            }
+            else
+            {
+                if (addNewUser)
+                {
+                    var userDTO = new UserDTO
+                    {
+                        WxID = openID
+                    };
+                    return userService.Add(userDTO);
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
     }
 }

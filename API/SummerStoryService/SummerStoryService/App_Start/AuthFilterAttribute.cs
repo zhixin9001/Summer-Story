@@ -23,23 +23,22 @@ namespace SummerStoryService.App_Start
                 return;
             }
             var token = actionContext.Request.Headers.Authorization != null ? actionContext.Request.Headers.Authorization.Parameter : null;
-
+            bool isAuthed = true;
             if (string.IsNullOrEmpty(token))
             {
-                actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, new HttpError("Token Error!"));
+                isAuthed = false;
             }
             else
             {
-                //var openID = JWTManager.DecodeToken(token);
-                //HttpContext.Current.Session[Consts.OPENID_KEY] = openID;
-                if (HttpContext.Current.Session != null && HttpContext.Current.Session[Consts.OPENID_KEY] != null)
+                var openID = JWTManager.DecodeToken(token);
+                if (string.IsNullOrEmpty(openID))
                 {
-                    HttpContext.Current.Session[Consts.OPENID_KEY] = "openID";
+                    isAuthed = false;
                 }
-                else
-                {
-                    HttpContext.Current.Session.Add(Consts.OPENID_KEY, "asdf");
-                }
+            }
+            if (isAuthed)
+            {
+                actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, new HttpError("Token Error!"));
             }
             /*
             GET http://localhost:1156/api/record/1 HTTP/1.1
