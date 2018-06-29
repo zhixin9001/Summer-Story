@@ -123,16 +123,32 @@ Page({
     })
   },
   submitData: function (e) {
+
+  },
+  uploadPhoto: function (e) {
     var self = this;
-    wx.uploadFile({
-      url: config.addRecordUrl,
-      filePath: this.data.photos,
-      name: 'file',
-      header: { Authorization: app.globalData.openid },
-      success: function (res) {
-        var data = res.data
-        //do something
-      }
-    })
-  }
+
+    var promise = Promise.all(this.data.photos.map((tempFilePath, index) => {
+      return new Promise(function (resolve, reject) {
+        wx.uploadFile({
+          url: config.addRecordUrl,
+          filePath: tempFilePath,
+          header: { Authorization: app.globalData.openid },
+          success: function (res) {
+            resolve(res.data);
+          },
+          fail: function (err) {
+            reject(err.data);
+          }
+        })
+      })
+    }));
+
+    promise.then(function (results) {
+
+    }).catch(function (err) {
+
+    });
+  },
+  
 })
