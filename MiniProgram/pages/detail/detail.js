@@ -1,4 +1,4 @@
-const config = require('./config');
+const config = require('../../config');
 var app = getApp()
 
 Page({
@@ -41,7 +41,6 @@ Page({
       sizeType: ['original'],
       sourceType: [sourceType],
       success: function (res) {
-        debugger
         let addedPhotos = that.data.photos;
         res.tempFilePaths.forEach(a => {
           addedPhotos.unshift(a);
@@ -126,12 +125,16 @@ Page({
     var self = this;
     wx.uploadFile({
       url: config.addRecordUrl,
-      filePath: this.data.photos,
+      filePath: this.data.photos[0],
       name: 'file',
-      header: { Authorization: app.globalData.openid },
+      header: { Authorization: app.globalData.token },
       success: function (res) {
         var data = res.data
+        console.log(res)
         //do something
+      },
+      fail: function (err) {
+        console.log(err)
       }
     })
   }

@@ -2,8 +2,7 @@ const config = require('./config');
 
 App({
   globalData: {
-    hasLogin: false,
-    openid: null
+    token: null
   },
   onLaunch: function () {
     var self = this;
@@ -16,7 +15,7 @@ App({
           method: "GET",
           data: { code: res.code },
           success: function (result) {
-            self.globalData.openid = "Bearer " + result.data;
+            self.globalData.token = "Bearer " + result.data;
           },
           fail: function () {
             wx.showModal({
