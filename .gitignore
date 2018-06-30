@@ -26,3 +26,6 @@
 /API/SummerStoryService/IService/bin/Debug
 /API/SummerStoryService/Service/bin/Debug
 /API/SummerStoryService/SummerStoryService/Logs
+/API/SummerStoryService/DTO/bin/Release
+/API/SummerStoryService/IService/bin/Release
+/API/SummerStoryService/Service/bin/Release

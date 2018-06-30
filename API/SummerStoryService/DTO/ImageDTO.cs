@@ -9,6 +9,7 @@ namespace DTO
         public long ID { get; set; }
         public long RecordID { get; set; }
         public DateTime CreatedDateTime { get; set; }
+        public int Sequence { get; set; }
         public string ImageName { get; set; }
         public string ThumbNailName { get; set; }
         public bool IsDeleted { get; set; }

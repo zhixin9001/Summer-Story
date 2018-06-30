@@ -23,6 +23,7 @@ namespace Service.Services
             var entity = new ImageEntity
             {
                 RecordID = dto.RecordID,
+                Sequence=dto.Sequence,
                 ImageName = dto.ImageName,
                 ThumbNailName = dto.ThumbNailName
             };
@@ -31,7 +32,7 @@ namespace Service.Services
 
         public ImageDTO[] GetByRecordID(long recordID)
         {
-            var entities = rep.GetAll().Where(a => a.RecordID == recordID).ToList();
+            var entities = rep.GetAll().Where(a => a.RecordID == recordID).OrderBy(a=>a.Sequence).ToList();
             return entities.Select(a => ToDTO(a)).ToArray();
         }
 
@@ -47,6 +48,7 @@ namespace Service.Services
                 ID = entity.ID,
                 CreatedDateTime = entity.CreatedDateTime,
                 RecordID = entity.RecordID,
+                Sequence=entity.Sequence,
                 ImageName = entity.ImageName,
                 ThumbNailName = entity.ThumbNailName
             };

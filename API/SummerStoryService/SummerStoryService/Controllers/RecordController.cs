@@ -71,7 +71,7 @@ namespace SummerStoryService.Controllers
         }
 
         // POST: api/Record
-        public void Post(AddRecordRequest request)
+        public void Post(/*AddRecordRequest request*/)
         {
             var files = HttpContext.Current.Request.Files;
             if (files == null || files.Count <= 0)
@@ -79,6 +79,11 @@ namespace SummerStoryService.Controllers
                 throw new ArgumentException("There're no Images been uploaded");
             }
             var userID = GetUserIDByToken(addNewUser: true);
+
+            if (userID < 0)
+            {
+                throw new Exception("Add User failed");
+            }
 
             var recordDTO = new RecordDTO
             {
@@ -89,7 +94,7 @@ namespace SummerStoryService.Controllers
             var textDTO = new TextDTO
             {
                 RecordID = recordID,
-                Content = request.Content
+                Content = "test"// request.Content
             };
             textService.Add(textDTO);
 
@@ -110,8 +115,8 @@ namespace SummerStoryService.Controllers
                         var imageDTO = new ImageDTO
                         {
                             RecordID = recordID,
-                            ImageName = imageName,
-                            ThumbNailName = thumbnailName
+                            ImageName = imageName + Consts.IMAGE_SUFFIX,
+                            ThumbNailName = thumbnailName + Consts.IMAGE_SUFFIX
                         };
                         imageService.Add(imageDTO);
                     }
@@ -125,10 +130,20 @@ namespace SummerStoryService.Controllers
 
         private long GetUserIDByToken(bool addNewUser = false)
         {
-            var token = HttpContext.Current.Request.Headers["Authorization"];
+            var auth = HttpContext.Current.Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(auth))
+            {
+                return -1;
+            }
+            var split = auth.Split(new char[] { ' ' });
+            string token = "";
+            if (split != null && split.Length == 2)
+            {
+                token = split[1];
+            }
             var openID = JWTManager.DecodeToken(token);
             var user = userService.GetByWxID(openID);
-            if (user == null)
+            if (user != null)
             {
                 return user.ID;
             }
@@ -144,7 +159,7 @@ namespace SummerStoryService.Controllers
                 }
                 else
                 {
-                    return 0;
+                    return -1;
                 }
             }
         }

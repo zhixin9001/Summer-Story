@@ -38,7 +38,8 @@ namespace Service.Services
         {
             if (entity == null)
             {
-                throw new ArgumentException("UserEntity cannot be null");
+                //throw new ArgumentException("UserEntity cannot be null");
+                return null;
             }
 
             var dto = new UserDTO

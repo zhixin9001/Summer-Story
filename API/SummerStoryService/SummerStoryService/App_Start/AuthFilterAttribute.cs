@@ -36,7 +36,7 @@ namespace SummerStoryService.App_Start
                     isAuthed = false;
                 }
             }
-            if (isAuthed)
+            if (!isAuthed)
             {
                 actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, new HttpError("Token Error!"));
             }
