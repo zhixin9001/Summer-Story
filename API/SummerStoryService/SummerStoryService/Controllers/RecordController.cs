@@ -71,69 +71,31 @@ namespace SummerStoryService.Controllers
         }
 
         // POST: api/Record
-        public void Post(/*AddRecordRequest request*/)
+        public long Post(AddRecordRequest request)
         {
-            var files = HttpContext.Current.Request.Files;
-            if (files == null || files.Count <= 0)
-            {
-                throw new ArgumentException("There're no Images been uploaded");
-            }
             var userID = GetUserIDByToken(addNewUser: true);
-
-            if (userID < 0)
-            {
-                throw new Exception("Add User failed");
-            }
-
             var recordDTO = new RecordDTO
             {
-                UserID = userID
+                UserID = userID,
+                IsDeleted = true //set this flag as true before adding text and images successfully
             };
             var recordID = recordService.Add(recordDTO);
-
             var textDTO = new TextDTO
             {
                 RecordID = recordID,
-                Content = "test"// request.Content
+                Content = request.Content
             };
             textService.Add(textDTO);
-
-            for (var i = 0; i < files.Count; i++)
-            {
-                var file = files[i];
-                var imageName = Guid.NewGuid().ToString().Substring(0, 8) + "-" + DateTime.Now.ToString();
-                var thumbnailName = imageName + Consts.THUMBNAIL_FLAG;
-
-                var thumbnail = GenerateThumbnail.Generate(file.InputStream);
-                var thumbnailUploadResult = CloudImageManager.Save(thumbnail, thumbnailName + Consts.IMAGE_SUFFIX);
-                file.InputStream.Position = 0;
-                if (thumbnailUploadResult == 200)
-                {
-                    var imageUploadResult = CloudImageManager.Save(file.InputStream, imageName + Consts.IMAGE_SUFFIX);
-                    if (imageUploadResult == 200)
-                    {
-                        var imageDTO = new ImageDTO
-                        {
-                            RecordID = recordID,
-                            ImageName = imageName + Consts.IMAGE_SUFFIX,
-                            ThumbNailName = thumbnailName + Consts.IMAGE_SUFFIX
-                        };
-                        imageService.Add(imageDTO);
-                    }
-                    else
-                    {
-                        //rollback
-                    }
-                }
-            }
+            return recordID;
         }
 
         private long GetUserIDByToken(bool addNewUser = false)
         {
+            long userID = -1;
             var auth = HttpContext.Current.Request.Headers["Authorization"];
             if (string.IsNullOrEmpty(auth))
             {
-                return -1;
+                userID = -1;
             }
             var split = auth.Split(new char[] { ' ' });
             string token = "";
@@ -145,7 +107,7 @@ namespace SummerStoryService.Controllers
             var user = userService.GetByWxID(openID);
             if (user != null)
             {
-                return user.ID;
+                userID = user.ID;
             }
             else
             {
@@ -155,12 +117,20 @@ namespace SummerStoryService.Controllers
                     {
                         WxID = openID
                     };
-                    return userService.Add(userDTO);
+                    userID = userService.Add(userDTO);
                 }
                 else
                 {
-                    return -1;
+                    userID = -1;
                 }
+            }
+            if (userID >= 0)
+            {
+                return userID;
+            }
+            else
+            {
+                throw new Exception("Add User failed");
             }
         }
     }

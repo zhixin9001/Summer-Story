@@ -17,6 +17,7 @@ namespace SummerStoryService.App_Start
     {
         public override void OnAuthorization(HttpActionContext actionContext)
         {
+            return;
             //如果Action带有AllowAnonymousAttribute，则不进行授权验证
             if (actionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any())
             {

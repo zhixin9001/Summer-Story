@@ -2,6 +2,7 @@
 using DTO;
 using IService;
 using Service.Services;
+using SummerStoryService.Models.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +15,15 @@ namespace SummerStoryService.Controllers
 {
     public class ImageController : ApiController
     {
-        IRecordService recordService;
-        IImageService imageService;
-        public ImageController()
-        {
-            this.recordService = new RecordService();
-        }
+        //IRecordService recordService;
+        //IImageService imageService;
+        //public ImageController()
+        //{
+        //    this.recordService = new RecordService();
+        //}
 
         //api/Image
-        public void Post()
+        public void Post(AddImageRequest request)
         {
             var files = HttpContext.Current.Request.Files;
             if (files == null || files.Count <= 0)
@@ -30,10 +31,9 @@ namespace SummerStoryService.Controllers
                 throw new ArgumentException("There're no Images been uploaded");
             }
 
-            var recordID = 1;
-
-            var file = files[0];
-            var seq = Convert.ToInt32(files.Keys[0]);
+            var recordID = request.RecordID;
+            var sequence = request.Sequence;
+            var file = files[0];        
 
             var imageName = Guid.NewGuid().ToString().Substring(0, 8) + "-" + DateTime.Now.ToString();
             var thumbnailName = imageName + Consts.THUMBNAIL_FLAG;
@@ -49,11 +49,11 @@ namespace SummerStoryService.Controllers
                     var imageDTO = new ImageDTO
                     {
                         RecordID = recordID,
-                        Sequence=seq,
+                        Sequence=sequence,
                         ImageName = imageName + Consts.IMAGE_SUFFIX,
                         ThumbNailName = thumbnailName + Consts.IMAGE_SUFFIX
                     };
-                    imageService.Add(imageDTO);
+                    //imageService.Add(imageDTO);
                 }
                 else
                 {
