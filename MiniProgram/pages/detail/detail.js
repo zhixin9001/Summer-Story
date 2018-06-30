@@ -122,20 +122,33 @@ Page({
     })
   },
   submitData: function (e) {
+    this.uploadPhoto();
+  },
+  uploadPhoto: function (e) {
     var self = this;
-    wx.uploadFile({
-      url: config.addRecordUrl,
-      filePath: this.data.photos[0],
-      name: 'file',
-      header: { Authorization: app.globalData.token },
-      success: function (res) {
-        var data = res.data
-        console.log(res)
-        //do something
-      },
-      fail: function (err) {
-        console.log(err)
-      }
-    })
-  }
+
+    var promise = Promise.all(this.data.photos.map((tempFilePath, index) => {
+      return new Promise(function (resolve, reject) {
+        wx.uploadFile({
+          url: config.addRecordUrl,
+          filePath: tempFilePath,
+          name: index.toString(),
+          header: { Authorization: app.globalData.token },
+          success: function (res) {
+            resolve(res.data);
+          },
+          fail: function (err) {
+            reject(err.data);
+          }
+        })
+      })
+    }));
+
+    promise.then(function (results) {
+      console.log(results,"then");
+    }).catch(function (err) {
+      console.log(err,"catch");
+    });
+  },
+
 })

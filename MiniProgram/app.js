@@ -20,7 +20,7 @@ App({
           fail: function () {
             wx.showModal({
               title: '登录失败',
-              content: '登录失败,请尝试重新打开应用',
+              content: '登录失败，请尝试重新打开应用',
               showCancel: false,
               success: function (res) {
                 wx.navigateBack({
