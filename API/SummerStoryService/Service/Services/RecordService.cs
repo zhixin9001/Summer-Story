@@ -35,6 +35,15 @@ namespace Service.Services
             return entities.Select(a => ToDTO(a)).ToArray();
         }
 
+        public void MarkRecordEnable(long recordID)
+        {
+            var record = rep.GetById(recordID);
+            if (record == null)
+            {
+
+            }
+        }
+
         private RecordDTO ToDTO(RecordEntity entity)
         {
             if (entity == null)

@@ -23,21 +23,23 @@ namespace SummerStoryService.Controllers
         //}
 
         //api/Image
-        public void Post(AddImageRequest request)
+        public void Post()
         {
+            var recordIDStr = HttpContext.Current.Request.Form["recordID"];
+            var sequenceStr = HttpContext.Current.Request.Form["sequence"];
+            if (string.IsNullOrEmpty(recordIDStr) || string.IsNullOrEmpty(sequenceStr))
+            {
+                throw new ArgumentException("RecordID or Sequence hasn't been setted");
+            }
             var files = HttpContext.Current.Request.Files;
             if (files == null || files.Count <= 0)
             {
                 throw new ArgumentException("There're no Images been uploaded");
             }
 
-            var recordID = request.RecordID;
-            var sequence = request.Sequence;
-            var file = files[0];        
-
+            var file = files[0];
             var imageName = Guid.NewGuid().ToString().Substring(0, 8) + "-" + DateTime.Now.ToString();
             var thumbnailName = imageName + Consts.THUMBNAIL_FLAG;
-
             var thumbnail = GenerateThumbnail.Generate(file.InputStream);
             var thumbnailUploadResult = CloudImageManager.Save(thumbnail, thumbnailName + Consts.IMAGE_SUFFIX);
             file.InputStream.Position = 0;
@@ -48,8 +50,8 @@ namespace SummerStoryService.Controllers
                 {
                     var imageDTO = new ImageDTO
                     {
-                        RecordID = recordID,
-                        Sequence=sequence,
+                        RecordID = Convert.ToInt64(recordIDStr),
+                        Sequence = Convert.ToInt32(sequenceStr),
                         ImageName = imageName + Consts.IMAGE_SUFFIX,
                         ThumbNailName = thumbnailName + Consts.IMAGE_SUFFIX
                     };

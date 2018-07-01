@@ -7,5 +7,6 @@ namespace IService
     {
         long Add(RecordDTO dto);
         RecordDTO[] GetPagedData(long userID, int startIndex, int pageSize);
+        void MarkRecordEnable(long recordID);
     }
 }

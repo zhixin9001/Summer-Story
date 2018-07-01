@@ -77,7 +77,7 @@ namespace SummerStoryService.Controllers
             var recordDTO = new RecordDTO
             {
                 UserID = userID,
-                IsDeleted = true //set this flag as true before adding text and images successfully
+                IsDeleted = true //set this flag as true after adding text and images successfully
             };
             var recordID = recordService.Add(recordDTO);
             var textDTO = new TextDTO
@@ -87,6 +87,11 @@ namespace SummerStoryService.Controllers
             };
             textService.Add(textDTO);
             return recordID;
+        }
+
+        public void Put(MarkRecordEnableRequest request)
+        {
+            recordService.MarkRecordEnable(request.RecordID);
         }
 
         private long GetUserIDByToken(bool addNewUser = false)

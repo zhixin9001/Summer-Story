@@ -5,9 +5,8 @@ using System.Web;
 
 namespace SummerStoryService.Models.Requests
 {
-    public class AddImageRequest
+    public class MarkRecordEnableRequest
     {
         public long RecordID { get; set; }
-        public int Sequence { get; set; }
     }
 }

@@ -100,7 +100,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Requests\AddImageRequest.cs" />
+    <Compile Include="Models\Requests\MarkRecordEnableRequest.cs" />
     <Compile Include="Models\Requests\AddRecordRequest.cs" />
     <Compile Include="Models\Responses\RecordResponse.cs" />
     <Compile Include="Models\Responses\WxSessionResponse.cs" />
