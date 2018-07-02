@@ -16,11 +16,12 @@ namespace SummerStoryService.Controllers
     public class ImageController : ApiController
     {
         //IRecordService recordService;
-        //IImageService imageService;
-        //public ImageController()
-        //{
-        //    this.recordService = new RecordService();
-        //}
+        IImageService imageService;
+        public ImageController()
+        {
+            //this.recordService = new RecordService();
+            this.imageService = new ImageService();
+        }
 
         //api/Image
         public void Post()
@@ -55,7 +56,7 @@ namespace SummerStoryService.Controllers
                         ImageName = imageName + Consts.IMAGE_SUFFIX,
                         ThumbNailName = thumbnailName + Consts.IMAGE_SUFFIX
                     };
-                    //imageService.Add(imageDTO);
+                    imageService.Add(imageDTO);
                 }
                 else
                 {

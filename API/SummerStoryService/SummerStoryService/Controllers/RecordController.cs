@@ -77,8 +77,13 @@ namespace SummerStoryService.Controllers
             var recordDTO = new RecordDTO
             {
                 UserID = userID,
-                IsDeleted = true //set this flag as true after adding text and images successfully
+                IsDeleted = true //set this flag as true before adding text and images successfully
             };
+            if (request.Latitude.HasValue && request.Longitude.HasValue)
+            {
+                recordDTO.Latitude = request.Latitude.Value;
+                recordDTO.Longitude = request.Longitude.Value;
+            }
             var recordID = recordService.Add(recordDTO);
             var textDTO = new TextDTO
             {

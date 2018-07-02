@@ -21,7 +21,8 @@ namespace Service.Services
             {
                 UserID = dto.UserID,
                 Longitude=dto.Longitude,
-                Latitude=dto.Latitude
+                Latitude=dto.Latitude,
+                IsDeleted=dto.IsDeleted
             };
             return rep.Add(entity);
         }
@@ -39,8 +40,8 @@ namespace Service.Services
 
         public void MarkRecordEnable(long recordID)
         {
-            var record = rep.GetById(recordID);
-            if (record == null)
+            var record = rep.Ctx.Records.FirstOrDefault(a => a.ID == recordID);
+            if (record != null)
             {
                 record.IsDeleted = false;
                 rep.Ctx.SaveChanges();

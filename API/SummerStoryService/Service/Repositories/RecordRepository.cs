@@ -28,12 +28,12 @@ namespace Service.Repositories
 
         public IQueryable<RecordEntity> GetAll()
         {
-            throw new NotImplementedException();
+            return Ctx.Records.Where(a => a.IsDeleted == false);
         }
 
         public RecordEntity GetById(long id)
         {
-            throw new NotImplementedException();
+            return GetAll().FirstOrDefault(a => a.ID == id);
         }
 
         public void Update(RecordEntity entity)
