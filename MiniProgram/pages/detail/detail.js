@@ -17,7 +17,8 @@ Page({
     },
     location: '位置',
     x: 0,
-    y: 0
+    y: 0,
+    recordID: 0
   },
   addPhoto: function () {
     let that = this;
@@ -122,7 +123,26 @@ Page({
     })
   },
   submitData: function (e) {
-    this.uploadPhoto();
+    let self = this;
+    wx.request({
+      url: config.addRecordUrl,
+      method: 'POST',
+      header: { Authorization: app.globalData.token },
+      data: {
+        content: self.data.content,
+        latitude: self.data.x,
+        longitude: self.data.y
+      },
+      success: function (res) {
+        self.setData({
+          recordID: res.data
+        });
+        self.uploadPhoto();
+      },
+      fail: function (err) {
+        console.log(err);
+      }
+    })
   },
   uploadPhoto: function (e) {
     var self = this;
@@ -130,9 +150,10 @@ Page({
     var promise = Promise.all(this.data.photos.map((tempFilePath, index) => {
       return new Promise(function (resolve, reject) {
         wx.uploadFile({
-          url: config.addRecordUrl,
+          url: config.uploadImageUrl,
           filePath: tempFilePath,
           name: index.toString(),
+          formData: { recordID: self.data.recordID, sequence: index },
           header: { Authorization: app.globalData.token },
           success: function (res) {
             resolve(res.data);
@@ -145,9 +166,15 @@ Page({
     }));
 
     promise.then(function (results) {
-      console.log(results,"then");
+      debugger
+      wx.request({
+        url: config.markRecordEnableUrl,
+        header: { Authorization: app.globalData.token },
+        method: "PUT",
+        data: { recordID: self.data.recordID }
+      })
     }).catch(function (err) {
-      console.log(err,"catch");
+      console.log(err, "catch");
     });
   },
 
