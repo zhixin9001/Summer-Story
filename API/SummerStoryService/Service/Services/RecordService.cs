@@ -19,7 +19,9 @@ namespace Service.Services
         {
             var entity = new RecordEntity
             {
-                UserID = dto.UserID
+                UserID = dto.UserID,
+                Longitude=dto.Longitude,
+                Latitude=dto.Latitude
             };
             return rep.Add(entity);
         }
@@ -40,7 +42,12 @@ namespace Service.Services
             var record = rep.GetById(recordID);
             if (record == null)
             {
-
+                record.IsDeleted = false;
+                rep.Ctx.SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentException(string.Format("Record {0} cannot be found", recordID));
             }
         }
 
@@ -54,6 +61,8 @@ namespace Service.Services
             var dto = new RecordDTO
             {
                 ID = entity.ID,
+                Longitude = entity.Longitude,
+                Latitude = entity.Latitude,
                 CreatedDateTime = entity.CreatedDateTime,
             };
             if (entity.Images != null)
