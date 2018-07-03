@@ -1,0 +1,15 @@
+<template name="item1">
+  <navigator url="../item/item?id={{ item.id }}">
+    <view class="item">
+      <image class="poster" src="{{ item.images.small }}"/>
+      <view class="meta">
+        <text class="title">{{ item.title }}</text>
+        <text class="sub-title">{{ item.original_title }} ({{ item.year }})</text>
+        <view class="artists">导演：<block wx:for="{{ item.directors }}" wx:key="id"> {{ item.name }} </block></view>
+      </view>
+      <view class="rating">
+        <text>{{ item.rating.average }}</text>
+      </view>
+    </view>
+  </navigator>
+</template>
