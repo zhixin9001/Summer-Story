@@ -1,4 +1,4 @@
 <import src="../common/record-list"/>
 <view class="container">
-  <template is="movie-list" data="{{ movies, loading, hasMore }}"/>
+  <template is="record-list" data="{{ records, loading, hasMore }}"/>
 </view>
