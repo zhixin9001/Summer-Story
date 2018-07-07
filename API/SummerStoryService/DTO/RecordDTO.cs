@@ -6,6 +6,7 @@ namespace DTO
     {
         public long ID { get; set; }
         public long UserID { get; set; }
+        public string LocationName { get; set; }
         public float Latitude { get; set; }
         public float Longitude { get; set; }
         public DateTime CreatedDateTime { get; set; }

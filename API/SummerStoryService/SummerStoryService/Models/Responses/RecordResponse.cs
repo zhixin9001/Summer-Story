@@ -9,6 +9,8 @@ namespace SummerStoryService.Models.Responses
     {
         public long RecordID { get; set; }
         public string Content { get; set; }
+        public string PostedDate { get; set; }
+        public string LocationName { get; set; }
         public List<ImageModel> Images { get; set; }
     }
 

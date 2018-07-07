@@ -20,6 +20,7 @@ namespace Service.Services
             var entity = new RecordEntity
             {
                 UserID = dto.UserID,
+                LocationName=dto.LocationName,
                 Longitude=dto.Longitude,
                 Latitude=dto.Latitude,
                 IsDeleted=dto.IsDeleted
