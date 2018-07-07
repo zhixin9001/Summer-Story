@@ -125,7 +125,7 @@ Page({
   submitData: function (e) {
     let self = this;
     wx.request({
-      url: config.addRecordUrl,
+      url: config.recordUrl,
       method: 'POST',
       header: { Authorization: app.globalData.token },
       data: {
@@ -166,14 +166,26 @@ Page({
     }));
 
     promise.then(function (results) {
-      debugger
       wx.request({
-        url: config.markRecordEnableUrl,
+        url: config.recordUrl,
         header: { Authorization: app.globalData.token },
         method: "PUT",
-        data: { recordID: self.data.recordID }
+        data: { recordID: self.data.recordID },
+        success: function () {
+          wx.showToast({
+            title: '保存成功',
+          })
+        },
+        fail: function () {
+          wx.showToast({
+            title: '保存失败',
+          })
+        }
       })
     }).catch(function (err) {
+      wx.showToast({
+        title: '保存失败',
+      })
       console.log(err, "catch");
     });
   },

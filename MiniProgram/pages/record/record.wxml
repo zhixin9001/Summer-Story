@@ -1,0 +1,11 @@
+<view class="container">
+  <!-- <loading hidden="{{ !loading }}">加载中...</loading> -->
+  <image wx:if="{{ item.Images[0].ImagelURL }}" class="background" src="{{ item.Images[0].ImagelURL }}" mode="aspectFill" />
+  <block>
+    <view class="meta">
+      <image class="poster" src="{{item.Images[0].ImagelURL }}" mode="aspectFit" />
+      <!-- <text class="title">{{ movie.title }}({{ movie.year }})</text> -->
+      <text class="info">{{ item.Content }}</text>
+    </view>
+  </block>
+</view>

@@ -5,8 +5,7 @@ var host = "http://localhost:1156"
 
 var config = {
   loginUrl: `${host}/api/Login`,
-  addRecordUrl: `${host}/api/Record`,
-  markRecordEnableUrl: `${host}/api/Record`,
+  recordUrl: `${host}/api/Record`,
   uploadImageUrl: `${host}/api/Image`,
   downloadFileUrl: `${host}/static/weapp.jpg`
 };

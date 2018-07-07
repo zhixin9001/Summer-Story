@@ -1,11 +1,13 @@
 <template name="record">
-  <navigator url="../item/item?id={{ item.id }}">
+  <navigator url="../record/record?item={{Json.stringify(item) }}">
     <view class="item">
-      <image class="poster" src="{{ item.images.small }}"/>
+      <image class="poster" mode="aspectFill" src="{{ item.Images[0].ThumbnailURL }}" />
       <view class="meta">
-        <text class="title">{{ item.title }}</text>
-        <text class="sub-title">{{ item.original_title }} ({{ item.year }})</text>
-        <view class="artists"><block wx:for="{{ item.directors }}" wx:key="id"> {{ item.name }} </block></view>
+        <text class="title">{{ item.Content }}</text>
+        <!-- <text class="sub-title">{{ item.original_title }} ({{ item.year }})</text>
+        <view class="artists">
+          <block wx:for="{{ item.directors }}" wx:key="id"> {{ item.name }} </block>
+        </view> -->
       </view>
     </view>
   </navigator>
@@ -13,10 +15,10 @@
 
 <template name="record-list">
   <view class="list">
-    <template is="record" data="{{ item }}" wx:for="{{ records }}" wx:key="id"/>
+    <template is="record" data="{{ item }}" wx:for="{{ records }}" wx:key="id" />
     <view class="tips">
       <view wx:if="{{ hasMore }}">
-        <image src="/images/loading.gif" mode="aspectFill"/>
+        <image src="/images/loading.gif" mode="aspectFill" />
         <text>玩命加载中...</text>
       </view>
       <view wx:else>
