@@ -28,6 +28,7 @@ namespace Common
         public string QiNiuAccessKey;
         public string QiNiuSecretKey;
         public string QiNiuCloudDomain;
+        public string QiNiuBucket;
         public string WxAppID;
         public string WxApp_Secret;
         public string WxTokenURL;

@@ -11,11 +11,9 @@ public class CloudImageManager
     public static int Save(Stream imageStream, string imageName)
     {
         Mac mac = new Mac(ConfigHelper.config.QiNiuAccessKey, ConfigHelper.config.QiNiuSecretKey);
-        // 存储空间名
-        string Bucket = "summerystory";
         // 设置上传策略，详见：https://developer.qiniu.com/kodo/manual/1206/put-policy
         PutPolicy putPolicy = new PutPolicy();
-        putPolicy.Scope = Bucket;
+        putPolicy.Scope = ConfigHelper.config.QiNiuBucket;
         putPolicy.SetExpires(3600);
         putPolicy.DeleteAfterDays = 1;
         string token = Auth.CreateUploadToken(mac, putPolicy.ToJsonString());
@@ -37,6 +35,11 @@ public class CloudImageManager
     public static string GetPrivateURL(string imageKey)
     {
         Mac mac = new Mac(ConfigHelper.config.QiNiuAccessKey, ConfigHelper.config.QiNiuSecretKey);
-        return DownloadManager.CreatePrivateUrl(mac, ConfigHelper.config.QiNiuCloudDomain, imageKey, 3600);
+        return DownloadManager.CreatePrivateUrl(mac, ConfigHelper.config.QiNiuCloudDomain, imageKey, 72000);
+    }
+
+    public static string GetPublicURL(string imageKey)
+    {
+        return ConfigHelper.config.QiNiuCloudDomain + imageKey;
     }
 }

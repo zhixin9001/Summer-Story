@@ -39,7 +39,7 @@ namespace SummerStoryService.Controllers
             }
 
             var file = files[0];
-            var imageName = Guid.NewGuid().ToString().Substring(0, 8) + "-" + DateTime.Now.ToString();
+            var imageName = Guid.NewGuid().ToString().Substring(0, 8) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
             var thumbnailName = imageName + Consts.THUMBNAIL_FLAG;
             var thumbnail = GenerateThumbnail.Generate(file.InputStream);
             var thumbnailUploadResult = CloudImageManager.Save(thumbnail, thumbnailName + Consts.IMAGE_SUFFIX);

@@ -29,14 +29,14 @@ namespace SummerStoryService.Controllers
             this.imageService = new ImageService();
         }
         // GET: api/Record
-        public IEnumerable<RecordResponse> Get(int startIndex)
+        public IEnumerable<RecordResponse> Get(int page)
         {
             var userID = GetUserIDByToken();
             if (userID <= 0)
             {
                 return null;
             }
-            var records = recordService.GetPagedData(userID, startIndex, Consts.PAGE_SIZE);
+            var records = recordService.GetPagedData(userID, (page - 1) * Consts.PAGE_SIZE, Consts.PAGE_SIZE);
             var response = new List<RecordResponse>();
             if (records != null)
             {
@@ -58,8 +58,8 @@ namespace SummerStoryService.Controllers
                         {
                             var imageModel = new ImageModel
                             {
-                                ImageURL = CloudImageManager.GetPrivateURL(images[i].ImageName),
-                                ThumbnailURL = CloudImageManager.GetPrivateURL(images[i].ThumbNailName),
+                                ImageURL = CloudImageManager.GetPublicURL(images[j].ImageName),
+                                ThumbnailURL = CloudImageManager.GetPublicURL(images[j].ThumbNailName),
                             };
                             record.Images.Add(imageModel);
                         }

@@ -9,7 +9,7 @@ namespace Common
     public static class Consts
     {
         public const string IMAGE_SUFFIX = ".jpg";
-        public const string THUMBNAIL_FLAG = "-thumb";
+        public const string THUMBNAIL_FLAG = "_thumb";
         public const string OPENID_KEY = "openID";
         public const int PAGE_SIZE = 10;
     }
