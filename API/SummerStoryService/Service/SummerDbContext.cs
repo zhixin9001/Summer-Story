@@ -11,7 +11,8 @@ namespace Service
     {
         public SummerDbContext() : base("name=connStr")
         {
-
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

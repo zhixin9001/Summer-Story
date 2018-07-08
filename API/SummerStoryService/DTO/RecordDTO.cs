@@ -11,7 +11,7 @@ namespace DTO
         public float Longitude { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public bool IsDeleted { get; set; }
-        public long[] TextIDs { get; set; }
-        public long[] ImageIDs { get; set; }
+        //public long[] TextIDs { get; set; }
+        //public long[] ImageIDs { get; set; }
     }
 }

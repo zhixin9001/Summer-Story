@@ -47,9 +47,9 @@ namespace SummerStoryService.Controllers
                         RecordID = records[i].ID,
                         LocationName=records[i].LocationName,
                         Images = new List<ImageModel>(),
-                        PostedDate = records[i].CreatedDateTime.ToString("MM/dd/yyyy HH:mm:ss")
+                        PostedDate = records[i].CreatedDateTime.ToString("yyyy/MM/dd HH:mm:ss")
                     };
-                    var text = textService.GetByRecordID(records[i].ID);
+                    var text =textService.GetByRecordID(records[i].ID);
                     var images = imageService.GetByRecordID(records[i].ID);
                     if (text != null)
                     {
@@ -84,7 +84,7 @@ namespace SummerStoryService.Controllers
             };
             if (request.Latitude.HasValue && request.Longitude.HasValue)
             {
-                recordDTO.LocationName = request.LocationName;
+                recordDTO.LocationName = request.Location;
                 recordDTO.Latitude = request.Latitude.Value;
                 recordDTO.Longitude = request.Longitude.Value;
             }

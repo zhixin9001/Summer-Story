@@ -65,16 +65,17 @@ namespace Service.Services
                 ID = entity.ID,
                 Longitude = entity.Longitude,
                 Latitude = entity.Latitude,
+                LocationName=entity.LocationName,
                 CreatedDateTime = entity.CreatedDateTime,
             };
-            if (entity.Images != null)
-            {
-                dto.ImageIDs = entity.Images.Select(a => a.ID).ToArray();
-            }
-            if (entity.Texts != null)
-            {
-                dto.TextIDs = entity.Texts.Select(a => a.ID).ToArray();
-            }
+            //if (entity.Images != null)
+            //{
+            //    dto.ImageIDs = entity.Images.Select(a => a.ID).ToArray();
+            //}
+            //if (entity.Texts != null)
+            //{
+            //    dto.TextIDs = entity.Texts.Select(a => a.ID).ToArray();
+            //}
             return dto;
         }
     }
