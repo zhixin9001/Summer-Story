@@ -124,6 +124,12 @@ Page({
   },
   submitData: function (e) {
     let self = this;
+    if (!self.data.content || self.data.content.length <= 0) {
+      wx.showToast({
+        title: '请添加图片或文字',
+      })
+      return;
+    }
     wx.request({
       url: config.recordUrl,
       method: 'POST',
@@ -137,7 +143,11 @@ Page({
         self.setData({
           recordID: res.data
         });
-        self.uploadPhoto();
+        if (this.data.photos && this.data.photos.length > 0) {
+          self.uploadPhoto();
+        } else {
+          self.activateRecord();
+        }
       },
       fail: function (err) {
         console.log(err);
@@ -146,7 +156,6 @@ Page({
   },
   uploadPhoto: function (e) {
     var self = this;
-
     var promise = Promise.all(this.data.photos.map((tempFilePath, index) => {
       return new Promise(function (resolve, reject) {
         wx.uploadFile({
@@ -164,30 +173,27 @@ Page({
         })
       })
     }));
-
-    promise.then(function (results) {
-      wx.request({
-        url: config.recordUrl,
-        header: { Authorization: app.globalData.token },
-        method: "PUT",
-        data: { recordID: self.data.recordID },
-        success: function () {
-          wx.showToast({
-            title: '保存成功',
-          })
-        },
-        fail: function () {
-          wx.showToast({
-            title: '保存失败',
-          })
-        }
-      })
-    }).catch(function (err) {
-      wx.showToast({
-        title: '保存失败',
-      })
-      console.log(err, "catch");
-    });
+    self.activateRecord();
   },
+
+  activateRecord() {
+    wx.request({
+      url: config.recordUrl,
+      header: { Authorization: app.globalData.token },
+      method: "PUT",
+      data: { recordID: self.data.recordID },
+      success: function () {
+        wx.showToast({
+          title: '保存成功',
+        })
+        
+      },
+      fail: function () {
+        wx.showToast({
+          title: '保存失败',
+        })
+      }
+    })
+  }
 
 })
