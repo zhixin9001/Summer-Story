@@ -25,7 +25,15 @@ Page({
       success: function (res) {
         console.log(res.data);
         if (res.data.length > 0) {
+          res.data.forEach(a => {
+            let sub = a.Content.substring(0, 40);
+            if(a.Content.length>40){
+              sub+="...";
+            }
+            a.SubContent = sub;
+          });
           self.setData({ records: self.data.records.concat(res.data), loading: false });
+          app.globalData.records = self.data.records;
         } else {
           self.setData({ hasMore: false, loading: false });
         }

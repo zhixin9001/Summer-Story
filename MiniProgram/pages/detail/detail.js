@@ -1,5 +1,5 @@
 const config = require('../../config');
-var app = getApp()
+var app = getApp();
 
 Page({
 
@@ -131,7 +131,8 @@ Page({
       data: {
         content: self.data.content,
         latitude: self.data.x,
-        longitude: self.data.y
+        longitude: self.data.y,
+        location:self.data.location
       },
       success: function (res) {
         self.setData({

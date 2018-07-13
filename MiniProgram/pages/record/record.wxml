@@ -1,11 +1,22 @@
+<!-- <swiper indicator-dots="true" autoplay="true" interval="5000" duration="500">
+  <swiper-item wx:for="{{record.Images}}">
+    <image src="{{item.ImageURL}}" mode="aspectFit" htight=""/>
+  </swiper-item>
+</swiper> -->
 <view class="container">
-  <!-- <loading hidden="{{ !loading }}">加载中...</loading> -->
-  <image wx:if="{{ item.Images[0].ImagelURL }}" class="background" src="{{ item.Images[0].ImagelURL }}" mode="aspectFill" />
+  <image wx:if="{{ record.Images[0].ImageURL }}" class="background" src="{{ record.Images[0].ImageURL }}" mode="aspectFill" />
   <block>
     <view class="meta">
-      <image class="poster" src="{{item.Images[0].ImagelURL }}" mode="aspectFit" />
+      <text class="info">{{ record.PostedDate }} {{ record.LocationName?record.LocationName:"" }}</text>
+      <text class="info">{{ record.Content }}</text>
+      <image wx:for="{{record.Images}}" class="poster" src="{{item.ImageURL }}" mode="aspectFit" />
+      <!-- <swiper indicator-dots="true" autoplay="true" interval="5000" duration="500">
+        <swiper-item wx:for="{{ record.Images }}" wx:key="id">
+          <image class="poster" src="{{id.ImageURL }}" mode="aspectFit" />
+        </swiper-item>
+      </swiper> -->
+
       <!-- <text class="title">{{ movie.title }}({{ movie.year }})</text> -->
-      <text class="info">{{ item.Content }}</text>
     </view>
   </block>
 </view>

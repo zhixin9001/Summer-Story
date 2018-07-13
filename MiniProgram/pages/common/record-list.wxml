@@ -1,11 +1,11 @@
 <template name="record">
-  <navigator url="../record/record?item={{Json.stringify(item) }}">
+  <navigator url="../record/record?recordID={{item.RecordID }}">
     <view class="item">
       <image class="poster" mode="aspectFill" src="{{ item.Images[0].ThumbnailURL }}" />
       <view class="meta">
-        <text class="title">{{ item.Content }}</text>
-        <!-- <text class="sub-title">{{ item.original_title }} ({{ item.year }})</text>
-        <view class="artists">
+        <text class="artists">{{ item.SubContent}}</text>
+        <text class="sub-title">{{ item.PostedDate }} {{ item.LocationName?item.LocationName:"" }}</text>
+        <!-- <view class="artists">
           <block wx:for="{{ item.directors }}" wx:key="id"> {{ item.name }} </block>
         </view> -->
       </view>

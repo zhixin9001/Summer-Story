@@ -2,7 +2,8 @@ const config = require('./config');
 
 App({
   globalData: {
-    token: null
+    token: null,
+    records: []
   },
   onLaunch: function () {
     var self = this;
